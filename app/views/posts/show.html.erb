@@ -2,10 +2,15 @@
   <%= link_to @post.title, edit_post_path(@post) %>
   <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, post_path(@post), data: {confirm: "Are you sure?", method: "delete"}, id: "delete-post-#{@post.id}" %>
 </h2>
-<h4><%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%A %I:%M %p on %B %d, %Y %Z") %></h4>
-<% unless @post.created_at == @post.updated_at %>
- <h4>(edited <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%A %I:%M %p on %B %d, %Y %Z") %>)</h4>
-<% end %>
+<hr>
+<p>
+  by me <small>- <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%b") %> <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%d, %Y %I:%M%p").downcase %> <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%Z") %></small>
+  <% unless @post.created_at == @post.updated_at %>
+   <small>&nbsp; | &nbsp; Updated <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%b") %> <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%d, %Y %I:%M%p").downcase %> <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%Z") %></small>
+  <% end %>
+</p>
+
+<hr>
 <p class="well">
   <%= link_to @post.body, edit_post_path(@post) %>
 </p>
