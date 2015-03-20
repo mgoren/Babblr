@@ -1,0 +1,15 @@
+<%= render 'layouts/errors', object: @post %>
+
+<%= bootstrap_form_for(@post) do |f| %>
+
+  <div class="form-group">
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_area :body %>
+  </div>
+
+  <%= f.submit %>
+
+<% end %>
