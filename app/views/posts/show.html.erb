@@ -7,5 +7,19 @@
  <h4>(edited <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%A %I:%M %p on %B %d, %Y %Z") %>)</h4>
 <% end %>
 <p class="well">
-<%= link_to @post.body, edit_post_path(@post) %>
+  <%= link_to @post.body, edit_post_path(@post) %>
 </p>
+
+<div class="comments">
+  <ul class="">
+    <% @post.comments.each do |comment| %>
+      <li><%= comment.text %> <small>(<%= comment.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y") %>)</small></li>
+    <% end %>
+  </ul>
+  <%= bootstrap_form_for([@post, Comment.new]) do |f| %>
+    <div class="form-group">
+      <%= f.text_area :text %>
+    </div>
+    <%= f.submit %>
+  <% end %>
+</div>

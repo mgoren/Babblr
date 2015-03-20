@@ -1,4 +1,6 @@
 <!-- not necessary to render errors page because of flash error notice combined with bootstrap_form notice -->
+<!-- including anyway for sake of practice -->
+<%= render 'layouts/errors', object: @post %>
 
 <%= bootstrap_form_for(@post) do |f| %>
 
