@@ -41,6 +41,15 @@ describe 'the posts process' do
     expect(page).to have_content 'successfully'
   end
 
+  it 'deletes post' do
+    go_home
+    create_a_new_post
+    post = Post.first
+    find("#delete-post-#{post.id}").click
+    :confirm
+    expect(page).not_to have_content 'test title'
+    expect(page).to have_content 'Post exterminated!'
+  end
 
 
 private
