@@ -25,7 +25,14 @@ class CommentsController < ApplicationController
       flash[:error] = "Comment not updated!"
     end
     redirect_to post_path(@post)
+  end
 
+  def destroy
+    @post = Post.find(params[:post_id])
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    flash[:notice] = "Comment exterminated!"
+    redirect_to post_path(@post)
   end
 
 
