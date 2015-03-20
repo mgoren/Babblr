@@ -13,7 +13,7 @@
 <div class="comments">
   <ul class="">
     <% @post.comments.each do |comment| %>
-      <li><%= comment.text %> <small>(<%= comment.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y") %>)</small></li>
+      <li><%= link_to comment.text, edit_post_comment_path(@post, comment) %> <small>(<%= comment.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y") %>)</small></li>
     <% end %>
   </ul>
   <%= bootstrap_form_for([@post, Comment.new]) do |f| %>

@@ -1,0 +1,8 @@
+<h3>Edit Comment</h3>
+
+<%= bootstrap_form_for([@post, @comment]) do |f| %>
+  <div class="form-group">
+    <%= f.text_area :text %>
+  </div>
+  <%= f.submit %>
+<% end %>

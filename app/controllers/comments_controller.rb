@@ -1,5 +1,10 @@
 class CommentsController < ApplicationController
 
+  def edit
+    @post = Post.find(params[:post_id])
+    @comment = Comment.find(params[:id])
+  end
+
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.new(comment_params)
@@ -9,6 +14,18 @@ class CommentsController < ApplicationController
       flash[:error] = "Comment not submitted!"
     end
     redirect_to post_path(@post) 
+  end
+
+  def update
+    @post = Post.find(params[:post_id])
+    @comment = Comment.find(params[:id])
+    if @comment.update(comment_params)
+      flash[:notice] = "Comment updated!"
+    else
+      flash[:error] = "Comment not updated!"
+    end
+    redirect_to post_path(@post)
+
   end
 
 
