@@ -6,4 +6,6 @@
 <% unless @post.created_at == @post.updated_at %>
  <h4>(edited <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%A %I:%M %p on %B %d, %Y %Z") %>)</h4>
 <% end %>
-<p class="well"><%= @post.body %></p>
+<p class="well">
+<%= link_to @post.body, edit_post_path(@post) %>
+</p>
