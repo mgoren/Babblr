@@ -18,6 +18,7 @@ class PostsController < ApplicationController
       flash[:notice] = "Post successfully added!"
       redirect_to post_path(@post)
     else
+      flash[:error] = "Please fill out title and body."
       render :new
     end
   end
