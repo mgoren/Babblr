@@ -1,2 +1,6 @@
 <h2><%= @post.title %></h2>
+<h4><%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%A %I:%M %p on %B %d, %Y %Z") %></h4>
+<% unless @post.created_at == @post.updated_at %>
+ <h4>(edited <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%A %I:%M %p on %B %d, %Y %Z") %>)</h4>
+<% end %>
 <p class="well"><%= @post.body %></p>
