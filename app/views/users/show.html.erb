@@ -4,8 +4,13 @@
   <%= link_to "edit account", edit_user_registration_path(@user) %>
 <% end %>
 
-<ul class="list-unstyled">
-  <% @user.posts.each do |post| %>
-    <li><%= link_to post.title, post_path(post) %></li>
-  <% end %>
-</ul>
+<% if @user.posts.any? %>  
+  <div class="well" id="user-posts-display">
+    <h4>Posts by <%= @user.username %>:</h4>
+    <ul class="list-unstyled">
+      <% @user.posts.each do |post| %>
+        <li><%= link_to post.title, post_path(post) %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

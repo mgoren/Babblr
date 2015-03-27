@@ -1,5 +1,5 @@
 <ul class="list-unstyled well">
-  <% @posts.each do |post| %>
-    <li><%= link_to post.user.username, user_path(post.user) %>: &nbsp; <%= link_to post.title, post_path(post) %> &nbsp; <small>[<%= post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y").downcase %>]</small></li>
+  <% @posts.reverse.each do |post| %>
+    <li><%= link_to post.title, post_path(post) %> &mdash; <small>by <%= link_to post.user.username, user_path(post.user) %> at <%= post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y").downcase %></small></li>
   <% end %>
 </ul>
