@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_filter :authenticate_user!, except: [:index, :show]
 
   def edit
     @post = Post.find(params[:post_id])
@@ -8,6 +9,7 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.new(comment_params)
+    @comment.user = current_user
     if @comment.save
       flash[:notice] = "Comment submitted!"
     else

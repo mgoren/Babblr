@@ -1,30 +1,71 @@
 <h2>
-  <%= link_to @post.title, edit_post_path(@post) %>
-  <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, post_path(@post), data: {confirm: "Are you sure?", method: "delete"}, id: "delete-post-#{@post.id}" %>
+  <% if user_signed_in? && @post.user == current_user %>
+    <%= link_to @post.title, edit_post_path(@post) %>
+    <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, post_path(@post), data: {confirm: "Are you sure?", method: "delete"}, id: "delete-post-#{@post.id}" %>
+  <% else %>
+    <%= @post.title %>
+  <% end %>
 </h2>
 <hr>
-<p>
-  by me <small>- <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%b") %> <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%d, %Y %I:%M%p").downcase %> <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%Z") %></small>
+<p id="post-byline">
+  by <%= link_to @post.user.username, user_path(@post.user) %> <small>- <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%b") %> <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%d, %Y %I:%M%p").downcase %> <%= @post.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%Z") %></small>
   <% unless @post.created_at == @post.updated_at %>
    <small>&nbsp; | &nbsp; Updated <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%b") %> <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%d, %Y %I:%M%p").downcase %> <%= @post.updated_at.in_time_zone('Pacific Time (US & Canada)').strftime("%Z") %></small>
   <% end %>
 </p>
 
 <hr>
-<p class="well">
-  <%= link_to @post.body, edit_post_path(@post) %>
+<p class="well" id="post-body-display">
+  <% if user_signed_in? && @post.user == current_user %>
+    <%= link_to @post.body, edit_post_path(@post) %>
+  <% else %>
+    <%= @post.body %>
+  <% end %>
 </p>
 
 <div class="comments">
-  <ul class="">
+  <% if @post.comments.any? %>
+    <h4>Comments:</h4>
     <% @post.comments.each do |comment| %>
-      <li><%= link_to comment.text, edit_post_comment_path(@post, comment) %> <small>(<%= comment.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y") %>)</small></li>
+      <div class="panel panel-default">
+
+        <div class="panel-heading">
+          <%= link_to comment.user.username, user_path(comment.user) %>
+        </div> <!-- end panel-heading -->
+
+        <div class="panel-body">
+          <% if user_signed_in? && comment.user == current_user %>
+            <%= link_to comment.text, edit_post_comment_path(@post, comment) %>
+          <% else %>
+            <%= comment.text %>
+          <% end %>
+        </div> <!-- end panel-body -->
+
+        <div class="panel-footer">
+           <%= comment.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y") %>
+        </div>
+
+      </div> <!-- end panel -->
     <% end %>
-  </ul>
-  <%= bootstrap_form_for([@post, Comment.new]) do |f| %>
-    <div class="form-group">
-      <%= f.text_area :text %>
-    </div>
-    <%= f.submit "Add Comment" %>
   <% end %>
+
+  <% if user_signed_in? %>
+    <button class="btn btn-success btn-sm" id="add-comment-btn">Add Comment</button>
+    <div id="add-comment-section">
+      <%= bootstrap_form_for([@post, Comment.new]) do |f| %>
+        <div class="form-group">
+          <%= f.text_area :text, label: "Comment:" %>
+        </div>
+        <%= f.submit "Submit Comment" %>
+      <% end %>
+    </div>
+  <% end %>
+
 </div>
+
+<script type="text/javascript">
+  $("#add-comment-btn").click(function() {
+    $("#add-comment-btn").hide();
+    $("#add-comment-section").show();
+  });
+</script>
