@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments, except: [:index, :new, :show] 
   end
-  resources :users
+  resources :users, only: [:show]
 end
