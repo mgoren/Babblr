@@ -4,6 +4,12 @@ Babblr, a blogging app.
 by Mike Goren
 
 This is a simple Ruby/Rails blogging app.
+3/27/15 - added multi-user with user auth
+
+Demo
+----
+https://ibabblr.herokuapp.com/
+
 
 Installation
 ------------
