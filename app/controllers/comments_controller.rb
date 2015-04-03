@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     if @comment.save
       if @post.user.phone
         msg = Message.new(to: @post.user.phone, post: @post.title, comment: @comment.text)
-        msg.send_sms
+        status = msg.send_sms
       end
       respond_to do |format|
         format.html do 

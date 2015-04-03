@@ -3,8 +3,7 @@ require 'rails_helper'
 describe Message do
   it "sends an sms" do
     msg = Message.new(to: ENV['TO_PHONE_NUMBER'], post: "foo", comment: "bar")
-    response = msg.send_sms
-    parsed_response = JSON.parse(response)
-    expect(parsed_response['status']).to eq("queued")
+    status = msg.send_sms
+    expect(status).to eq("queued")
   end
 end

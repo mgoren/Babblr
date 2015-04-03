@@ -67,4 +67,18 @@ describe 'the comments process' do
     expect(page).to have_content 'Comment exterminated!'
   end
 
+  it 'sends an sms on comment posting', js: true do
+    user = FactoryGirl.create(:user, phone: ENV['TO_PHONE_NUMBER'])
+    post = FactoryGirl.create(:post, user: user)
+    login(user)
+    go_home
+    click_on post.title
+    click_on "Add Comment"
+    fill_in 'Comment:', with: 'test comment'
+    click_on 'Create Comment'
+    last_message_sent = Message.get_last_sms
+    expect(last_message_sent['body']).to eq 'Your post (first post) has received the following response: test comment'
+  end
+
+
 end
