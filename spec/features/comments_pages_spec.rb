@@ -41,6 +41,19 @@ describe 'the comments process' do
     expect(page).to have_content 'Comment updated!'
   end
 
+  it 'edits comment with js', js: true do
+    user = FactoryGirl.create(:user)
+    post = FactoryGirl.create(:post, user: user)
+    comment = FactoryGirl.create(:comment, user: user, post: post)
+    login(user)
+    go_home
+    click_on post.title
+    click_on comment.text
+    fill_in 'Comment:', with: 'edited comment'
+    click_on 'Update Comment'
+    expect(page).to have_content 'edited comment'
+  end
+
   it 'deletes comment', js: true do
     user = FactoryGirl.create(:user)
     post = FactoryGirl.create(:post, user: user)
@@ -54,7 +67,4 @@ describe 'the comments process' do
     expect(page).to have_content 'Comment exterminated!'
   end
 
-
-
 end
-

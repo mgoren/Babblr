@@ -31,9 +31,9 @@
 
   <% if @post.comments.any? %>
     <h4>Comments:</h4>
-    <div id="all-post-comments">
-      <%= render @post.comments %>
-    </div>
   <% end %>
+  <div id="all-post-comments">
+    <%= render @post.comments %>
+  </div>
 
 </div>
