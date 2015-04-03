@@ -1,0 +1,3 @@
+$(".edit_comment").hide();
+$(".individ-comments").show();
+$("#comment-text-<%= @comment.id %>").hide().after('<%= j render("form") %>');

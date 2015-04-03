@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+    <%= link_to comment.user.username, user_path(comment.user) %>
+    <%= link_to '<span class="glyphicon glyphicon-trash pull-right"></span>'.html_safe, post_comment_path(comment.post, comment), data: {confirm: "Delete comment?", method: "delete"} %>
+
+  </div> <!-- end panel-heading -->
+
+  <div class="panel-body">
+    <% if user_signed_in? && comment.user == current_user %>
+      <div id="comment-text-<%= comment.id %>" class="individ-comments">
+        <%= link_to comment.text, edit_post_comment_path(@post, comment), remote: true %>
+      </div>
+    <% else %>
+      <%= comment.text %>
+    <% end %>
+  </div> <!-- end panel-body -->
+
+  <div class="panel-footer">
+     <%= comment.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y") %>
+  </div>
+
+</div> <!-- end panel -->
