@@ -8,9 +8,9 @@ describe 'the comments process' do
     login(user)
     go_home
     click_on post.title
-    click_button "Add Comment"
+    click_on "Add Comment"
     fill_in 'Comment:', with: 'test comment'
-    click_on 'Submit Comment'
+    click_on 'Create Comment'
     expect(page).to have_content 'test comment'
     expect(page).to have_content 'Comment submitted!'
   end
@@ -21,11 +21,10 @@ describe 'the comments process' do
     login(user)
     go_home
     click_on post.title
-    click_button "Add Comment"
+    click_on "Add Comment"
     fill_in 'Comment:', with: 'test comment'
-    click_on 'Submit Comment'
+    click_on 'Create Comment'
     expect(page).to have_content 'test comment'
-    expect(page).to have_content 'Comment submitted!'
   end
 
   it 'edits comment' do
@@ -36,13 +35,13 @@ describe 'the comments process' do
     go_home
     click_on post.title
     click_on comment.text
-    fill_in 'Text', with: 'edited comment'
+    fill_in 'Comment:', with: 'edited comment'
     click_on 'Update Comment'
     expect(page).to have_content 'edited comment'
     expect(page).to have_content 'Comment updated!'
   end
 
-  it 'deletes comment' do
+  it 'deletes comment', js: true do
     user = FactoryGirl.create(:user)
     post = FactoryGirl.create(:post, user: user)
     comment = FactoryGirl.create(:comment, user: user, post: post)
@@ -50,11 +49,12 @@ describe 'the comments process' do
     go_home
     click_on post.title
     click_on comment.text
-    click_on 'Delete Comment'
-    :confirm
+    page.find("#delete_comment_#{comment.id}").trigger('click')
     expect(page).not_to have_content 'test comment'
     expect(page).to have_content 'Comment exterminated!'
   end
+
+
 
 end
 

@@ -19,14 +19,14 @@ class CommentsController < ApplicationController
       respond_to do |format|
         format.html do 
           flash[:notice] = "Comment submitted!"
-          redirect_to tasks_url
+          redirect_to post_path(@post)
         end
         format.js
       end
     else
       format.html do
         flash[:error] = "Comment not submitted!"
-        redirect_to post_path(@post)
+        render :new
       end
       format.js { render js: "alert('Comment not submitted!');" }
     end
