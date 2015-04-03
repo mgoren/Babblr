@@ -14,6 +14,7 @@ gem 'bootstrap-sass', '~> 3.3.4'
 gem 'bootstrap_form'
 gem 'bootswatch-rails'
 gem 'devise'
+gem 'rest-client'
 
 group :development, :test do
   gem 'byebug'
@@ -23,6 +24,7 @@ group :development, :test do
   gem 'pry'
   gem 'poltergeist'
   gem 'database_cleaner'
+  gem 'dotenv-rails'
 end
 
 group :test do
