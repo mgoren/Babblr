@@ -50,3 +50,14 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 end
+
+VCR.configure do |c|
+  c.allow_http_connections_when_no_cassette = true
+  c.cassette_library_dir = 'spec/cassettes'
+  c.hook_into :webmock
+  c.configure_rspec_metadata!
+  c.filter_sensitive_data('<twilio account sid>') { ENV['TWILIO_ACCOUNT_SID'] }
+  c.filter_sensitive_data('<twilio auth token>') { ENV['TWILIO_AUTH_TOKEN'] }
+  c.filter_sensitive_data('<from phone number>') { ENV['FROM_PHONE_NUMBER'] }
+  c.filter_sensitive_data('<to phone number>') { ENV['TO_PHONE_NUMBER'] }
+end

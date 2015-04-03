@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Message do
+describe Message, vcr: true do
   it "sends an sms" do
     msg = Message.new(to: ENV['TO_PHONE_NUMBER'], body: "hello, world.")
     response = msg.send_sms
