@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe Message, vcr: true do
+describe Message do
   it "sends an sms" do
-    msg = Message.new(to: ENV['TO_PHONE_NUMBER'], body: "hello, world.")
+    msg = Message.new(to: ENV['TO_PHONE_NUMBER'], post: "foo", comment: "bar")
     response = msg.send_sms
     parsed_response = JSON.parse(response)
     expect(parsed_response['status']).to eq("queued")

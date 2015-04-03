@@ -16,6 +16,10 @@ class CommentsController < ApplicationController
     @comment = @post.comments.new(comment_params)
     @comment.user = current_user
     if @comment.save
+      if @post.user.phone
+        msg = Message.new(to: @post.user.phone, post: @post.title, comment: @comment.text)
+        msg.send_sms
+      end
       respond_to do |format|
         format.html do 
           flash[:notice] = "Comment submitted!"

@@ -2,7 +2,9 @@ class Message
 
   define_method(:initialize) do |attributes|
     @to = attributes[:to]
-    @body = attributes.fetch(:body)
+    @post = attributes.fetch(:post)
+    @comment = attributes.fetch(:comment)
+    @body = "Your post (" + @post + ") has received the following response: " + @comment
   end
 
   def send_sms
