@@ -1,6 +1,11 @@
 class CommentsController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
 
+  def new
+    @post = Post.find(params[:post_id])
+    @comment = Comment.new
+  end
+
   def edit
     @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
@@ -11,22 +16,42 @@ class CommentsController < ApplicationController
     @comment = @post.comments.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      flash[:notice] = "Comment submitted!"
+      respond_to do |format|
+        format.html do 
+          flash[:notice] = "Comment submitted!"
+          redirect_to tasks_url
+        end
+        format.js
+      end
     else
-      flash[:error] = "Comment not submitted!"
+      format.html do
+        flash[:error] = "Comment not submitted!"
+        redirect_to post_path(@post)
+      end
+      format.js { render js: "alert('Comment not submitted!');" }
     end
-    redirect_to post_path(@post) 
+    
   end
 
   def update
     @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
     if @comment.update(comment_params)
-      flash[:notice] = "Comment updated!"
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Comment updated!"
+          redirect_to post_path(@post)
+        end
+        format.js
+      end
     else
-      flash[:error] = "Comment not updated!"
+      format.html do
+        flash[:error] = "Comment not updated!"
+        render :edit
+      end
+      format.js { render js: "alert('Comment not updated!');" }
     end
-    redirect_to post_path(@post)
+    
   end
 
   def destroy

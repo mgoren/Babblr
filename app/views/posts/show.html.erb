@@ -24,48 +24,16 @@
 </p>
 
 <div class="comments">
-  <% if @post.comments.any? %>
-    <h4>Comments:</h4>
-    <% @post.comments.each do |comment| %>
-      <div class="panel panel-default">
-
-        <div class="panel-heading">
-          <%= link_to comment.user.username, user_path(comment.user) %>
-        </div> <!-- end panel-heading -->
-
-        <div class="panel-body">
-          <% if user_signed_in? && comment.user == current_user %>
-            <%= link_to comment.text, edit_post_comment_path(@post, comment) %>
-          <% else %>
-            <%= comment.text %>
-          <% end %>
-        </div> <!-- end panel-body -->
-
-        <div class="panel-footer">
-           <%= comment.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%I:%M %p %m/%d/%y") %>
-        </div>
-
-      </div> <!-- end panel -->
-    <% end %>
+  
+  <% if user_signed_in? %>
+    <%= link_to "Add Comment", new_post_comment_path(@post, Comment.new), id: "add-comment-btn", class: "btn btn-default", remote: true %>
   <% end %>
 
-  <% if user_signed_in? %>
-    <button class="btn btn-success btn-sm" id="add-comment-btn">Add Comment</button>
-    <div id="add-comment-section">
-      <%= bootstrap_form_for([@post, Comment.new]) do |f| %>
-        <div class="form-group">
-          <%= f.text_area :text, label: "Comment:" %>
-        </div>
-        <%= f.submit "Submit Comment" %>
-      <% end %>
+  <% if @post.comments.any? %>
+    <h4>Comments:</h4>
+    <div id="all-post-comments">
+      <%= render @post.comments %>
     </div>
   <% end %>
 
 </div>
-
-<script type="text/javascript">
-  $("#add-comment-btn").click(function() {
-    $("#add-comment-btn").hide();
-    $("#add-comment-section").show();
-  });
-</script>

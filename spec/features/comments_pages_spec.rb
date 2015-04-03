@@ -15,6 +15,19 @@ describe 'the comments process' do
     expect(page).to have_content 'Comment submitted!'
   end
 
+  it 'adds a new comment to a post with js', js: true do
+    user = FactoryGirl.create(:user)
+    post = FactoryGirl.create(:post, user: user)
+    login(user)
+    go_home
+    click_on post.title
+    click_button "Add Comment"
+    fill_in 'Comment:', with: 'test comment'
+    click_on 'Submit Comment'
+    expect(page).to have_content 'test comment'
+    expect(page).to have_content 'Comment submitted!'
+  end
+
   it 'edits comment' do
     user = FactoryGirl.create(:user)
     post = FactoryGirl.create(:post, user: user)

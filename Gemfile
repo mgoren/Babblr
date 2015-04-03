@@ -21,6 +21,8 @@ group :development, :test do
   gem 'spring'
   gem 'quiet_assets'
   gem 'pry'
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :test do
