@@ -76,6 +76,7 @@ describe 'the comments process' do
     click_on "Add Comment"
     fill_in 'Comment:', with: 'test comment'
     click_on 'Create Comment'
+    sleep 1 # to wait for sent message to actually show up in twilio's logs
     last_message_sent = Message.get_last_sms
     expect(last_message_sent['body']).to eq 'Your post (first post) has received the following response: test comment'
   end

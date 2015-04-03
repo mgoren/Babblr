@@ -1,9 +1,9 @@
 class Message
 
-  define_method(:initialize) do |attributes|
+  def initialize(attributes)
     @to = attributes[:to]
-    @post = attributes.fetch(:post)
-    @comment = attributes.fetch(:comment)
+    @post = attributes[:post]
+    @comment = attributes[:comment]
     @body = "Your post (" + @post + ") has received the following response: " + @comment
   end
 
